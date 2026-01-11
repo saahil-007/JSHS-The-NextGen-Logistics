@@ -31,6 +31,7 @@ import VehicleOnboarding from './pages/manager/onboarding/VehicleOnboarding'
 import DriverOnboarding from './pages/manager/onboarding/DriverOnboarding'
 import { getAppType } from './utils/subdomainUtils'
 import VapiWidget from './components/VapiWidget'
+import { SubdomainEnforcer } from './components/SubdomainEnforcer'
 
 export default function App() {
   const appType = getAppType()
@@ -63,7 +64,9 @@ export default function App() {
           path="/app"
           element={
             <ProtectedRoute>
-              <Layout />
+              <SubdomainEnforcer>
+                <Layout />
+              </SubdomainEnforcer>
             </ProtectedRoute>
           }
         >

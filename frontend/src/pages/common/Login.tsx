@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { useAuth } from '../../auth/AuthContext'
 import { TopNav } from '../../components/TopNav'
 import { MobileNav } from '../../components/MobileNav'
-import { getAppType } from '../../utils/subdomainUtils'
+import { getAppType, getRedirectUrlForRole } from '../../utils/subdomainUtils'
 
 export default function Login() {
   const { login, logout, user: authenticatedUser } = useAuth()
@@ -60,8 +60,15 @@ export default function Login() {
       // Small delay to ensure token is properly set in API interceptor
       await new Promise(resolve => setTimeout(resolve, 100))
 
-      const from = (location.state as any)?.from?.pathname || '/app/dashboard'
-      nav(from, { replace: true })
+      // Determine the correct redirect URL based on role
+      const targetUrl = getRedirectUrlForRole(user.role, (location.state as any)?.from?.pathname || '/app/dashboard')
+
+      // If we are on the wrong subdomain, we must do a full redirect
+      if (!window.location.hostname.startsWith(user.role.toLowerCase() + '.')) {
+        window.location.href = targetUrl
+      } else {
+        nav((location.state as any)?.from?.pathname || '/app/dashboard', { replace: true })
+      }
     } catch (err: unknown) {
       // Ensure we log out if the login succeeded but role check failed
       logout()

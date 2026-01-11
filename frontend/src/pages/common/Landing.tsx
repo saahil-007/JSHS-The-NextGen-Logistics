@@ -4,6 +4,7 @@ import { User, Truck } from 'lucide-react'
 
 import { useAuth } from '../../auth/AuthContext'
 import { TopNav } from '../../components/TopNav'
+import { getRedirectUrlForRole } from '../../utils/subdomainUtils'
 
 export default function Landing() {
   const { user } = useAuth()
@@ -63,18 +64,18 @@ export default function Landing() {
                   Track shipments & manage orders
                 </p>
                 <div className="mt-4 flex gap-2">
-                  <Link
-                    to="/login"
+                  <a
+                    href={getRedirectUrlForRole('CUSTOMER', '/login')}
                     className="flex-1 rounded-lg bg-indigo-600 py-2 text-center text-xs font-medium text-white hover:bg-indigo-700"
                   >
                     Login
-                  </Link>
-                  <Link
-                    to="/register"
+                  </a>
+                  <a
+                    href={getRedirectUrlForRole('CUSTOMER', '/register')}
                     className="flex-1 rounded-lg border border-indigo-200 py-2 text-center text-xs font-medium text-indigo-700 hover:bg-indigo-50 dark:border-indigo-500/30 dark:text-indigo-300 dark:hover:bg-indigo-500/10"
                   >
                     Register
-                  </Link>
+                  </a>
                 </div>
               </div>
 
@@ -88,18 +89,18 @@ export default function Landing() {
                   Join fleet & earn money
                 </p>
                 <div className="mt-4 flex gap-2">
-                  <Link
-                    to="/login?app=driver"
+                  <a
+                    href={getRedirectUrlForRole('DRIVER', '/login')}
                     className="flex-1 rounded-lg bg-cyan-600 py-2 text-center text-xs font-medium text-white hover:bg-cyan-700"
                   >
                     Login
-                  </Link>
-                  <Link
-                    to="/register?app=driver"
+                  </a>
+                  <a
+                    href={getRedirectUrlForRole('DRIVER', '/register')}
                     className="flex-1 rounded-lg border border-cyan-200 py-2 text-center text-xs font-medium text-cyan-700 hover:bg-cyan-50 dark:border-cyan-500/30 dark:text-cyan-300 dark:hover:bg-cyan-500/10"
                   >
                     Register
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>
