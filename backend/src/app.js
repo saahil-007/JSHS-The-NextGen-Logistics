@@ -33,7 +33,11 @@ app.use(
       }
 
       // Allow production domains
-      if (origin.endsWith('.jshsl.app') || origin.endsWith('.jshs.app')) {
+      if (
+        origin.endsWith('.jshsl.app') || 
+        origin.endsWith('.jshs.app') ||
+        origin.endsWith('.onrender.com')
+      ) {
         return callback(null, origin)
       }
 
